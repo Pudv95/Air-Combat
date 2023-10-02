@@ -182,6 +182,9 @@ function move() {
 function collide(bullet, player) {
     if (bullet.x <= player.x + 50 && bullet.x >= player.x-20 && bullet.y <= player.y + 80 && bullet.y >= player.y) {
         // console.log("maar diya behenchod");
+        document.getElementById("explosion_sound").volume = 0.3;
+        document.getElementById("explosion_sound").currentTime = 0;
+        document.getElementById("explosion_sound").play(); 
         return false;
     }
 
@@ -201,6 +204,9 @@ function Fire(){
 
     if (player1Shooting && player1Cooldown == 0 && bullets1.length< maxBulletCount) {
         // console.log("chal ja bsdk!!");
+        document.getElementById("bullet_sound").volume = 0.3;
+        document.getElementById("bullet_sound").currentTime = 0;
+        document.getElementById("bullet_sound").play();
         const newBullet = new Bullet(bullet1, player1.x, player1.y+15, 50,60, 10);
         bullets1.push(newBullet);
         player1Cooldown = shootingCooldown;
@@ -208,6 +214,9 @@ function Fire(){
 
     if (player2Shooting && player2Cooldown == 0 && bullets2.length < maxBulletCount) {
         // console.log("chal ja bsdk!!");
+        document.getElementById("bullet_sound").volume = 0.3;
+        document.getElementById("bullet_sound").currentTime = 0;
+        document.getElementById("bullet_sound").play(); 
         const newBullet = new Bullet(bullet2, player2.x, player2.y + 15, 50, 60, -10);
         bullets2.push(newBullet);
         player2Cooldown = shootingCooldown;
@@ -235,9 +244,11 @@ function main() {
 }
 
 
+// function play(){
+    // document.getElementById("bg_music").play();
+    setInterval(main, 1000 / 60);
+// }
 
-
-
-setInterval(main, 1000 / 60);
+// document.getElementById("play").addEventListener("click",play,false);
 
 
