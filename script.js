@@ -41,6 +41,11 @@ let player1Cooldown = 0;
 let player2Cooldown = 0;
 const maxBulletCount = 5;
 
+//Score
+var p1Score = 0;
+var p2Score = 0;
+
+
 
 /* Importing Images */
 
@@ -102,6 +107,11 @@ function draw(ctx){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Comic Sans MS";
+    ctx.fillStyle = "white";
+    ctx.fillText(`${p1Score}  -  ${p2Score}` , 480, 70);
+    ctx.fillText(`Player-1` , 120, 40);
+    ctx.fillText(`Player-2` , 800, 40);
     drawHealthBar();
     player1.draw(ctx);
     player2.draw(ctx);
@@ -117,24 +127,24 @@ function draw(ctx){
 }
 
 document.addEventListener('keydown', function (event) {
-    if (event.code == "ControlLeft") {
+    if (event.code == "KeyQ") {
         player1Shooting = true;
     }
 });
 
 document.addEventListener('keyup', function (event) {
-    if (event.code == "ControlLeft") {
+    if (event.code == "KeyQ") {
         player1Shooting = false;
     }
 });
 document.addEventListener('keydown', function (event) {
-    if (event.code == "ControlRight") { 
+    if (event.code == "KeyU") { 
         player2Shooting = true;
     }
 });
 
 document.addEventListener('keyup', function (event) {
-    if (event.code == "ControlRight") {
+    if (event.code == "KeyU") {
         player2Shooting = false;
     }
 });
@@ -155,16 +165,16 @@ function move() {
 
     function handleKeyDown(event) {
         //player 2
-        if (event.code == "ArrowUp") {
+        if (event.code == "KeyI") {
             y_velocity2_aage = speed2;
         }
-        if (event.code == "ArrowDown") {
+        if (event.code == "KeyK") {
             y_velocity2_piche = speed2;
         }
-        if (event.code == "ArrowLeft") {
+        if (event.code == "KeyJ") {
             x_velocity2_piche = speed2;
         }
-        if (event.code == "ArrowRight") {
+        if (event.code == "KeyL") {
             x_velocity2_aage = speed2;
         }
 
@@ -183,16 +193,16 @@ function move() {
         }
     }
     function handleKeyUP(event) {
-        if (event.code == "ArrowUp") {
+        if (event.code == "KeyI") {
             y_velocity2_aage = 0;
         }
-        if (event.code == "ArrowDown") {
+        if (event.code == "KeyK") {
             y_velocity2_piche = 0;
         }
-        if (event.code == "ArrowLeft") {
+        if (event.code == "KeyJ") {
             x_velocity2_piche = 0;
         }
-        if (event.code == "ArrowRight") {
+        if (event.code == "KeyL") {
             x_velocity2_aage = 0;
         }
         if (event.code == "KeyW") {
@@ -216,7 +226,7 @@ function move() {
 function collide(bullet, player) {
     if (bullet.x <= player.x + 50 && bullet.x >= player.x-20 && bullet.y <= player.y + 40 && bullet.y >= player.y) {
         // console.log("maar diya behenchod");
-        if(bullet.x<500){
+        if(bullet.x<520){
             Player1_health -= 10;
         }
         else{
@@ -275,18 +285,67 @@ function Fire(){
     
 }
 
+function reset(){
+    Player1_health = maxHealth;
+    Player2_health = maxHealth;
+    bullets1 = [];
+    bullets2 = [];
+    player1.x = 50;player1.y = 310;
+    player2.x = 950;player2.y = 310;
+    x_velocity2_aage = 0;
+    x_velocity2_piche = 0;
+    y_velocity2_aage = 0;
+    y_velocity2_piche = 0;
 
+    // For Jet-2
+    x_velocity1_aage = 0;
+    x_velocity1_piche = 0;
+    y_velocity1_aage = 0;
+    y_velocity1_piche = 0;
+
+    //Firing
+    player1Shooting = false;
+    player2Shooting = false;
+
+    document.addEventListener("keydown",(event)=>{
+        if(event.key == "Enter"){
+            running = true;
+        }
+    });
+}
+
+var running = true;
 
 function main() {
-    Fire();
-    move();
-    draw(ctx);
+    if(Player1_health == 0 || Player2_health == 0){
+        if(Player1_health) p1Score++;
+        else p2Score++;
+        running = false;
+        console.log("Here");
+        ctx.font = "30px Comic Sans MS";
+        ctx.fillStyle = "white";
+        ctx.fillText((Player1_health)?"Player 1 won":"Player 2 Won", 450, 300);
+        ctx.fillText("Press Enter To Play again", 370, 350);
+        var rematch = true;
+        if(rematch){
+            reset();
+        }
+        else{
+            console.log("Done");
+        }
+    }
+    if(running){
+        Fire();
+        move();
+        draw(ctx);
+    }
 }
 
 
 // function play(){
     // document.getElementById("bg_music").play();
-    setInterval(main, 1000 / 60);
+    if(running)
+        setInterval(main, 1000 / 60);
 // }
 
 // document.getElementById("play").addEventListener("click",play,false);
