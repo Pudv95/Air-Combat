@@ -62,6 +62,41 @@ export var player1 = new Block(jet1, 50, 310, 80, 80);
 export var player2 = new Block(jet2, 950, 310, 80, 80);
 
 
+//Health Bar
+const maxHealth = 300;
+
+let Player1_health = maxHealth;
+let Player2_health = maxHealth;
+
+function calculateHealthColor(health) {
+    let R = 0;
+    let G = 225;
+    let B = 0;
+
+    if (health > 150 && R <= 225) {
+        R = Math.round((9 / 4) * (300 - health));
+    } else if (0 <= health && health < 150) {
+        R = 225;
+        G = Math.round((3 / 2) * health);
+    }
+
+    console.log(`rgb(${R}, ${G}, ${B})`);
+
+    return `rgb(${R}, ${G}, ${B})`;
+}
+
+function drawHealthBar() {
+    const healthBarHeight = 20;
+
+
+    ctx.fillStyle = calculateHealthColor(Player1_health);
+    ctx.fillRect(50, 50, Player1_health, healthBarHeight);
+
+    ctx.fillStyle = calculateHealthColor(Player2_health);
+    ctx.fillRect(750, 50, Player2_health, healthBarHeight);
+}
+
+
 
 // Display images on canvas
 function draw(ctx){
@@ -69,6 +104,7 @@ function draw(ctx){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    drawHealthBar();
     player1.draw(ctx);
     player2.draw(ctx);
 
@@ -180,8 +216,14 @@ function move() {
 }
 
 function collide(bullet, player) {
-    if (bullet.x <= player.x + 50 && bullet.x >= player.x-20 && bullet.y <= player.y + 80 && bullet.y >= player.y) {
+    if (bullet.x <= player.x + 50 && bullet.x >= player.x-20 && bullet.y <= player.y + 40 && bullet.y >= player.y) {
         // console.log("maar diya behenchod");
+        if(bullet.x<500){
+            Player1_health -= 10;
+        }
+        else{
+            Player2_health -= 10;
+        }
         document.getElementById("explosion_sound").volume = 0.3;
         document.getElementById("explosion_sound").currentTime = 0;
         document.getElementById("explosion_sound").play(); 
