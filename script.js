@@ -64,7 +64,10 @@ export var player2 = new Block(jet2, 950, 310, 80, 80);
 
 
 // Display images on canvas
-function draw(ctx) {
+function draw(ctx){
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     player1.draw(ctx);
     player2.draw(ctx);
@@ -76,27 +79,28 @@ function draw(ctx) {
     for (let bullet1 of bullets2) {
         bullet1.draw(ctx);
     }
+
 }
 
 document.addEventListener('keydown', function (event) {
-    if (event.code === "ControlLeft") {
+    if (event.code == "ControlLeft") {
         player1Shooting = true;
     }
 });
 
 document.addEventListener('keyup', function (event) {
-    if (event.code === "ControlLeft") {
+    if (event.code == "ControlLeft") {
         player1Shooting = false;
     }
 });
 document.addEventListener('keydown', function (event) {
-    if (event.code === "ControlRight") { 
+    if (event.code == "ControlRight") { 
         player2Shooting = true;
     }
 });
 
 document.addEventListener('keyup', function (event) {
-    if (event.code === "ControlRight") {
+    if (event.code == "ControlRight") {
         player2Shooting = false;
     }
 });
@@ -175,6 +179,15 @@ function move() {
     document.addEventListener("keyup", handleKeyUP);
 }
 
+function collide(bullet, player) {
+    if (bullet.x <= player.x + 50 && bullet.x >= player.x-20 && bullet.y <= player.y + 80 && bullet.y >= player.y) {
+        // console.log("maar diya behenchod");
+        return false;
+    }
+
+    return bullet.x < canvas.width && bullet.x > 0;
+}
+
 function Fire(){
     
 
@@ -187,12 +200,14 @@ function Fire(){
     }
 
     if (player1Shooting && player1Cooldown == 0 && bullets1.length< maxBulletCount) {
+        // console.log("chal ja bsdk!!");
         const newBullet = new Bullet(bullet1, player1.x, player1.y+15, 50,60, 10);
         bullets1.push(newBullet);
         player1Cooldown = shootingCooldown;
     }
 
     if (player2Shooting && player2Cooldown == 0 && bullets2.length < maxBulletCount) {
+        // console.log("chal ja bsdk!!");
         const newBullet = new Bullet(bullet2, player2.x, player2.y + 15, 50, 60, -10);
         bullets2.push(newBullet);
         player2Cooldown = shootingCooldown;
@@ -206,8 +221,8 @@ function Fire(){
         bullet.shoot();
     }
 
-    bullets1 = bullets1.filter(bullet1 => bullet1.x < canvas.width);
-    bullets2 = bullets2.filter(bullet1 => bullet1.x > 0);
+    bullets1 = bullets1.filter((bullet) => collide(bullet,player2));
+    bullets2 = bullets2.filter((bullet) => collide(bullet,player1));
     
 }
 
