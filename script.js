@@ -41,6 +41,11 @@ let player1Cooldown = 0;
 let player2Cooldown = 0;
 const maxBulletCount = 5;
 
+//Score
+var p1Score = 0;
+var p2Score = 0;
+
+
 
 /* Importing Images */
 
@@ -102,6 +107,11 @@ function draw(ctx){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Comic Sans MS";
+    ctx.fillStyle = "white";
+    ctx.fillText(`${p1Score}  -  ${p2Score}` , 480, 70);
+    ctx.fillText(`Player-1` , 120, 40);
+    ctx.fillText(`Player-2` , 800, 40);
     drawHealthBar();
     player1.draw(ctx);
     player2.draw(ctx);
@@ -296,29 +306,39 @@ function reset(){
     //Firing
     player1Shooting = false;
     player2Shooting = false;
+
+    document.addEventListener("keydown",(event)=>{
+        if(event.key == "Enter"){
+            running = true;
+        }
+    });
 }
 
 var running = true;
 
 function main() {
-    if(Player1_health == 0 || Player2_health ==0){
+    if(Player1_health == 0 || Player2_health == 0){
+        if(Player1_health) p1Score++;
+        else p2Score++;
         running = false;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        ctx.font = "30px Arial";
-        ctx.fillText("Hello World", 10, 50);
-        var rematch = confirm("Ek aur match ho jaaye....?");
+        console.log("Here");
+        ctx.font = "30px Comic Sans MS";
+        ctx.fillStyle = "white";
+        ctx.fillText((Player1_health)?"Player 1 won":"Player 2 Won", 450, 300);
+        ctx.fillText("Press Enter To Play again", 370, 350);
+        var rematch = true;
         if(rematch){
             reset();
-            running = true;
         }
         else{
-            window.close();
+            console.log("Done");
         }
     }
-    Fire();
-    move();
-    draw(ctx);
+    if(running){
+        Fire();
+        move();
+        draw(ctx);
+    }
 }
 
 
