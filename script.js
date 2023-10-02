@@ -127,24 +127,24 @@ function draw(ctx){
 }
 
 document.addEventListener('keydown', function (event) {
-    if (event.code == "ControlLeft") {
+    if (event.code == "KeyQ") {
         player1Shooting = true;
     }
 });
 
 document.addEventListener('keyup', function (event) {
-    if (event.code == "ControlLeft") {
+    if (event.code == "KeyQ") {
         player1Shooting = false;
     }
 });
 document.addEventListener('keydown', function (event) {
-    if (event.code == "ControlRight") { 
+    if (event.code == "KeyU") { 
         player2Shooting = true;
     }
 });
 
 document.addEventListener('keyup', function (event) {
-    if (event.code == "ControlRight") {
+    if (event.code == "KeyU") {
         player2Shooting = false;
     }
 });
@@ -165,16 +165,16 @@ function move() {
 
     function handleKeyDown(event) {
         //player 2
-        if (event.code == "ArrowUp") {
+        if (event.code == "KeyI") {
             y_velocity2_aage = speed2;
         }
-        if (event.code == "ArrowDown") {
+        if (event.code == "KeyK") {
             y_velocity2_piche = speed2;
         }
-        if (event.code == "ArrowLeft") {
+        if (event.code == "KeyJ") {
             x_velocity2_piche = speed2;
         }
-        if (event.code == "ArrowRight") {
+        if (event.code == "KeyL") {
             x_velocity2_aage = speed2;
         }
 
@@ -193,16 +193,16 @@ function move() {
         }
     }
     function handleKeyUP(event) {
-        if (event.code == "ArrowUp") {
+        if (event.code == "KeyI") {
             y_velocity2_aage = 0;
         }
-        if (event.code == "ArrowDown") {
+        if (event.code == "KeyK") {
             y_velocity2_piche = 0;
         }
-        if (event.code == "ArrowLeft") {
+        if (event.code == "KeyJ") {
             x_velocity2_piche = 0;
         }
-        if (event.code == "ArrowRight") {
+        if (event.code == "KeyL") {
             x_velocity2_aage = 0;
         }
         if (event.code == "KeyW") {
