@@ -80,8 +80,6 @@ function calculateHealthColor(health) {
         G = Math.round((3 / 2) * health);
     }
 
-    console.log(`rgb(${R}, ${G}, ${B})`);
-
     return `rgb(${R}, ${G}, ${B})`;
 }
 
@@ -93,7 +91,7 @@ function drawHealthBar() {
     ctx.fillRect(50, 50, Player1_health, healthBarHeight);
 
     ctx.fillStyle = calculateHealthColor(Player2_health);
-    ctx.fillRect(750, 50, Player2_health, healthBarHeight);
+    ctx.fillRect(700 + maxHealth - Player2_health, 50, Player2_health, healthBarHeight);
 }
 
 
