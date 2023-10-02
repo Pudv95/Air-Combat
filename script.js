@@ -275,9 +275,21 @@ function Fire(){
     
 }
 
-
+var running = true;
 
 function main() {
+    if(Player1_health == 0 || Player2_health ==0){
+        running = false;
+        var rematch = confirm("Ek aur match ho jaaye....?");
+        if(rematch){
+            Player1_health = maxHealth;
+            Player2_health = maxHealth;
+            running = true;
+        }
+        else{
+            window.close();
+        }
+    }
     Fire();
     move();
     draw(ctx);
@@ -286,7 +298,8 @@ function main() {
 
 // function play(){
     // document.getElementById("bg_music").play();
-    setInterval(main, 1000 / 60);
+    if(running)
+        setInterval(main, 1000 / 60);
 // }
 
 // document.getElementById("play").addEventListener("click",play,false);
