@@ -216,7 +216,7 @@ function move() {
 function collide(bullet, player) {
     if (bullet.x <= player.x + 50 && bullet.x >= player.x-20 && bullet.y <= player.y + 40 && bullet.y >= player.y) {
         // console.log("maar diya behenchod");
-        if(bullet.x<500){
+        if(bullet.x<520){
             Player1_health -= 10;
         }
         else{
@@ -275,15 +275,41 @@ function Fire(){
     
 }
 
+function reset(){
+    Player1_health = maxHealth;
+    Player2_health = maxHealth;
+    bullets1 = [];
+    bullets2 = [];
+    player1.x = 50;player1.y = 310;
+    player2.x = 950;player2.y = 310;
+    x_velocity2_aage = 0;
+    x_velocity2_piche = 0;
+    y_velocity2_aage = 0;
+    y_velocity2_piche = 0;
+
+    // For Jet-2
+    x_velocity1_aage = 0;
+    x_velocity1_piche = 0;
+    y_velocity1_aage = 0;
+    y_velocity1_piche = 0;
+
+    //Firing
+    player1Shooting = false;
+    player2Shooting = false;
+}
+
 var running = true;
 
 function main() {
     if(Player1_health == 0 || Player2_health ==0){
         running = false;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        ctx.font = "30px Arial";
+        ctx.fillText("Hello World", 10, 50);
         var rematch = confirm("Ek aur match ho jaaye....?");
         if(rematch){
-            Player1_health = maxHealth;
-            Player2_health = maxHealth;
+            reset();
             running = true;
         }
         else{
