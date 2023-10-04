@@ -89,14 +89,15 @@ function calculateHealthColor(health) {
 }
 
 function drawHealthBar() {
-    const healthBarHeight = 20;
-
+    const healthBarHeight = 20;    
 
     ctx.fillStyle = calculateHealthColor(Player1_health);
     ctx.fillRect(50, 50, Player1_health, healthBarHeight);
 
     ctx.fillStyle = calculateHealthColor(Player2_health);
     ctx.fillRect(700 + maxHealth - Player2_health, 50, Player2_health, healthBarHeight);
+
+
 }
 
 
@@ -107,6 +108,12 @@ function draw(ctx){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(45, 45, maxHealth+10, 20+10);
+    ctx.clearRect(50,50, maxHealth, 20);
+    ctx.fillRect(695, 45, maxHealth+10, 20+10);
+    ctx.clearRect(700,50, maxHealth, 20);
     ctx.font = "30px Comic Sans MS";
     ctx.fillStyle = "white";
     ctx.fillText(`${p1Score}  -  ${p2Score}` , 480, 70);
@@ -225,7 +232,6 @@ function move() {
 
 function collide(bullet, player) {
     if (bullet.x <= player.x + 50 && bullet.x >= player.x-20 && bullet.y <= player.y + 40 && bullet.y >= player.y) {
-        // console.log("maar diya behenchod");
         if(bullet.x<520){
             Player1_health -= 10;
         }
@@ -253,7 +259,6 @@ function Fire(){
     }
 
     if (player1Shooting && player1Cooldown == 0 && bullets1.length< maxBulletCount) {
-        // console.log("chal ja bsdk!!");
         document.getElementById("bullet_sound").volume = 0.3;
         document.getElementById("bullet_sound").currentTime = 0;
         document.getElementById("bullet_sound").play();
@@ -263,7 +268,7 @@ function Fire(){
     }
 
     if (player2Shooting && player2Cooldown == 0 && bullets2.length < maxBulletCount) {
-        // console.log("chal ja bsdk!!");
+
         document.getElementById("bullet_sound").volume = 0.3;
         document.getElementById("bullet_sound").currentTime = 0;
         document.getElementById("bullet_sound").play(); 
